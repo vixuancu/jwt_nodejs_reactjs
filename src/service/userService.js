@@ -19,7 +19,7 @@ const createNewUser = async (email, password, username) => {
 
   try {
     const [rows, fields] = await connection.execute(
-      "INSERT INTO users (email,password,username) VALUES (?,?,?)",
+      "INSERT INTO user (email,password,username) VALUES (?,?,?)",
       [email, hashPass, username]
     );
   } catch (error) {
@@ -33,7 +33,7 @@ const getUserList = async () => {
     database: "jwt",
   });
   try {
-    const [rows, fields] = await connection.execute("SELECT * FROM users");
+    const [rows, fields] = await connection.execute("SELECT * FROM user");
     // console.log("check rows", rows);
     return rows;
   } catch (error) {
@@ -48,7 +48,7 @@ const deleteUser = async (id) => {
   });
   try {
     const [rows, fields] = await connection.execute(
-      "DELETE FROM users WHERE id=(?)",
+      "DELETE FROM user WHERE id=(?)",
       [id]
     );
     // console.log("check rows", rows);
@@ -65,7 +65,7 @@ const getUserById = async (id) => {
   });
   try {
     const [rows, fields] = await connection.execute(
-      "SELECT * FROM users WHERE id=(?)",
+      "SELECT * FROM user WHERE id=(?)",
       [id]
     );
     // console.log("check rows", rows);
@@ -82,7 +82,7 @@ const updateUserInfor = async (email, username, id) => {
   });
   try {
     const [rows, fields] = await connection.execute(
-      "UPDATE users set email = ?,username = ? WHERE id=?",
+      "UPDATE user set email = ?,username = ? WHERE id=?",
       [email, username, id]
     );
     // console.log("check rows", rows);
