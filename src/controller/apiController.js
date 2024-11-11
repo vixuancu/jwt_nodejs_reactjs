@@ -1,4 +1,7 @@
-import { registerNewUser } from "../service/loginRegisterService";
+import {
+  registerNewUser,
+  handleUserLogin,
+} from "../service/loginRegisterService";
 const testApi = (req, res) => {
   return res.status(200).json({
     message: "oke",
@@ -42,7 +45,24 @@ const handleRegister = async (req, res) => {
     });
   }
 };
+const handleLogin = async (req, res) => {
+  try {
+    let data = await handleUserLogin(req.body);
+    return res.status(200).json({
+      EM: data.EM, // error message
+      EC: data.EC, //error code
+      DT: data.DT, // data
+    });
+  } catch (error) {
+    return res.status(500).json({
+      EM: "error from sever", // error message
+      EC: -1, //error code
+      DT: "", // data
+    });
+  }
+};
 module.exports = {
   testApi,
   handleRegister,
+  handleLogin,
 };
