@@ -1,6 +1,10 @@
 import { where } from "sequelize/lib/sequelize";
 import db from "../models/index";
-
+import {
+  checkEmailExist,
+  checkPhoneExist,
+  hashUserPassword,
+} from "./loginRegisterService";
 const getAlluser = async () => {
   try {
     let users = await db.User.findAll({
@@ -35,8 +39,9 @@ const getUserWithPagination = async (page, limit) => {
     let { count, rows } = await db.User.findAndCountAll({
       offset: offset,
       limit: limit,
-      attributes: ["id", "username", "email", "phone", "sex"],
-      include: { model: db.Group, attributes: ["name", "description"] },
+      attributes: ["id", "username", "email", "phone", "sex", "address"],
+      include: { model: db.Group, attributes: ["name", "description", "id"] },
+      order: [["id", "DESC"]], // order
     });
     let totalPages = Math.ceil(count / limit);
     let data = {
@@ -55,7 +60,30 @@ const getUserWithPagination = async (page, limit) => {
 };
 const createNewUser = async (data) => {
   try {
-    await db.User.create(data);
+    // check email. phone number
+    // check email/phone number are exist
+    let isEmailExit = await checkEmailExist(data.email);
+    if (isEmailExit) {
+      return {
+        EM: "the email is already exist",
+        EC: 1, // chu y doan nay
+        DT: "email",
+      };
+    }
+    let isPhoneExist = await checkPhoneExist(data.phone);
+    if (isPhoneExist) {
+      return {
+        EM: "the phone number is already exist",
+        EC: 1,
+        DT: "phone",
+      };
+    }
+
+    // hash user password
+    let hashPassword = hashUserPassword(data.password);
+
+    // hash userpassword
+    await db.User.create({ ...data, password: hashPassword });
     return {
       EM: "created success",
       EC: 0,

@@ -112,4 +112,7 @@ const registerNewUser = async (rawUserData) => {
 module.exports = {
   registerNewUser,
   handleUserLogin,
+  hashUserPassword,
+  checkEmailExist,
+  checkPhoneExist,
 };

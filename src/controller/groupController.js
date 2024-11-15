@@ -1,9 +1,7 @@
 import groupService from "../service/groupService";
 const readFunc = async (req, res) => {
   try {
-    let data = await groupService.getGroup({
-      order: [["name", "ASC"]], // order
-    });
+    let data = await groupService.getGroup();
     return res.status(200).json({
       EM: data.EM, // error message
       EC: data.EC, //error code

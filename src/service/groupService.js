@@ -1,7 +1,9 @@
 import db from "../models/index";
 const getGroup = async () => {
   try {
-    let data = await db.Group.findAll();
+    let data = await db.Group.findAll({
+      order: [["name", "ASC"]], // order
+    });
     return {
       EM: "",
       EC: 0,
