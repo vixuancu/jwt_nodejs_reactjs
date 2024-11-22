@@ -3,6 +3,8 @@ const handleHelloWorld = (req, res) => {
   return res.render("home.ejs");
 };
 const handleUserPage = async (req, res) => {
+  // console.log("cookie", req.cookies);
+
   // model => get data from database
   let userlist = await userService.getUserList();
 
