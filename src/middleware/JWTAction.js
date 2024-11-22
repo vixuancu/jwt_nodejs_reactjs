@@ -1,7 +1,6 @@
 import jwt from "jsonwebtoken";
 require("dotenv").config();
-const createJWT = () => {
-  let payload = { name: "vxc", address: "honoi" };
+const createJWT = (payload) => {
   let key = process.env.JWT_SECRET;
   let token = null;
   try {
@@ -9,8 +8,7 @@ const createJWT = () => {
   } catch (error) {
     console.log(error);
   }
-
-  console.log("token:", token);
+  return token;
 };
 const verifyToken = (token) => {
   let key = process.env.JWT_SECRET;

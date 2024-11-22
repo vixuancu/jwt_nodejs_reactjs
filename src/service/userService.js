@@ -47,18 +47,6 @@ const getUserList = async () => {
 
   users = await db.User.findAll();
   return users;
-  // const connection = await mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   database: "jwt",
-  // });
-  // try {
-  //   const [rows, fields] = await connection.execute("SELECT * FROM user");
-  //   // console.log("check rows", rows);
-  //   return rows;
-  // } catch (error) {
-  //   console.log("check error", error);
-  // }
 };
 const deleteUser = async (userId) => {
   await db.User.destroy({
@@ -66,21 +54,6 @@ const deleteUser = async (userId) => {
       id: userId,
     },
   });
-  // const connection = await mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   database: "jwt",
-  // });
-  // try {
-  //   const [rows, fields] = await connection.execute(
-  //     "DELETE FROM user WHERE id=(?)",
-  //     [id]
-  //   );
-  //   // console.log("check rows", rows);
-  //   return rows;
-  // } catch (error) {
-  //   console.log("check error", error);
-  // }
 };
 const getUserById = async (userId) => {
   let user = {};
@@ -90,21 +63,6 @@ const getUserById = async (userId) => {
     },
   });
   return user;
-  // const connection = await mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   database: "jwt",
-  // });
-  // try {
-  //   const [rows, fields] = await connection.execute(
-  //     "SELECT * FROM user WHERE id=(?)",
-  //     [id]
-  //   );
-  //   // console.log("check rows", rows);
-  //   return rows;
-  // } catch (error) {
-  //   console.log("check error", error);
-  // }
 };
 const updateUserInfor = async (email, username, id) => {
   await db.User.update(
@@ -116,21 +74,6 @@ const updateUserInfor = async (email, username, id) => {
       where: { id: id },
     }
   );
-  // const connection = await mysql.createConnection({
-  //   host: "localhost",
-  //   user: "root",
-  //   database: "jwt",
-  // });
-  // try {
-  //   const [rows, fields] = await connection.execute(
-  //     "UPDATE user set email = ?,username = ? WHERE id=?",
-  //     [email, username, id]
-  //   );
-  //   // console.log("check rows", rows);
-  //   return rows;
-  // } catch (error) {
-  //   console.log("check error", error);
-  // }
 };
 module.exports = {
   createNewUser,

@@ -5,7 +5,6 @@ import initApiRoutes from "./routes/api";
 import configCors from "./config/cors";
 require("dotenv").config();
 import bodyParser from "body-parser";
-import { createJWT, verifyToken } from "./middleware/JWTAction";
 // import connection from "./config/connectDB";
 
 const app = express();
@@ -18,12 +17,7 @@ configViewEngine(app);
 // config body-parser phải thêm trước cái hàm initWebRoutes(app);
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
-//tesst jwt
-createJWT();
-let decodedData = verifyToken(
-  `eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoidnhjIiwiYWRkcmVzcyI6Imhvbm9pIiwiaWF0IjoxNzMyMjQzMTc1fQ.UVrQKh8eMl31ZL5G8_ajQQ_32yoysANodcrD1vGHuYI`
-);
-console.log(decodedData);
+
 // test connection db
 // connection();
 // init webRoutes
