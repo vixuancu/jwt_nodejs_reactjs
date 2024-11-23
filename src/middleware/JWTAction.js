@@ -1,5 +1,8 @@
 import jwt from "jsonwebtoken";
 require("dotenv").config();
+
+const nonSecurePaths = ["/", "/login", "register"];
+
 const createJWT = (payload) => {
   let key = process.env.JWT_SECRET;
   let token = null;
@@ -29,6 +32,7 @@ const verifyToken = (token) => {
   //   });
 };
 const checkUserJWT = (req, res, next) => {
+  if (nonSecurePaths.includes(req.path)) return next();
   let cookies = req.cookies;
   if (cookies && cookies.jwt) {
     let token = cookies.jwt;
@@ -38,7 +42,7 @@ const checkUserJWT = (req, res, next) => {
       next();
     } else {
       return res.status(401).json({
-        EC: "-1",
+        EC: -1,
         DT: "",
         EM: "Not authenticated the user",
       });
@@ -46,20 +50,21 @@ const checkUserJWT = (req, res, next) => {
     // console.log("cookies:", cookies);
   } else {
     return res.status(401).json({
-      EC: "-1",
+      EC: -1,
       DT: "",
       EM: "Not authenticated the user",
     });
   }
 };
 const checkUserPermission = (req, res, next) => {
+  if (nonSecurePaths.includes(req.path)) return next();
   if (req.user) {
     let email = req.user.email;
     let roles = req.user.groupWithRoles.Roles;
     let currentUrl = req.path;
     if (!roles || roles.length === 0) {
       return res.status(403).json({
-        EC: "-1",
+        EC: -1,
         DT: "",
         EM: `You don't permission to access this resource`,
       });
@@ -70,14 +75,14 @@ const checkUserPermission = (req, res, next) => {
       next();
     } else {
       return res.status(403).json({
-        EC: "-1",
+        EC: -1,
         DT: "",
         EM: `You don't permission to access this resource...`,
       });
     }
   } else {
     return res.status(401).json({
-      EC: "-1",
+      EC: -1,
       DT: "",
       EM: "Not authenticated the user",
     });
