@@ -2,7 +2,7 @@ import { query } from "express";
 import jwt from "jsonwebtoken";
 require("dotenv").config();
 
-const nonSecurePaths = ["/", "/login", "register"];
+const nonSecurePaths = ["/", "/login", "/logout", "register"];
 
 const createJWT = (payload) => {
   let key = process.env.JWT_SECRET;
